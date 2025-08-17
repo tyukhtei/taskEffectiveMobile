@@ -4,6 +4,7 @@ namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Concerns;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property string title
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
+	use SoftDeletes;
+
 	protected $fillable = [
 		'title',
 		'description',
