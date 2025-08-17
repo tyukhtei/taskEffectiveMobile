@@ -2,19 +2,24 @@
 
 namespace App\Service\Task;
 
+use App\Repositories\TaskRepositoryEloquent;
 use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Collection;
 
 final class TaskService
 {
+	public function __construct(private TaskRepositoryEloquent $repository)
+	{
+	}
+
 	public function indexTask(): Collection
 	{
-		return Task::all();
+		return $this->repository->all();
 	}
 
 	public function createTask(array $data): Task
 	{
-		return Task::create($data);
+		return $this->repository->create($data);
 	}
 
 	public function showTask(Task $task): Task
@@ -24,13 +29,12 @@ final class TaskService
 
 	public function updateTask(array $data, Task $task): Task
 	{
-		$task->update($data);
-		return $task->refresh();
+		return $this->repository->update($data, $task->id);
 	}
 
 	public function destroyTask(Task $task): Task
 	{
-		$task->delete();
+		$this->repository->delete($task->id);
 		return $task;
 	}
 }
